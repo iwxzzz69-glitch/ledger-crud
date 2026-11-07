@@ -14,6 +14,7 @@ const STATUS = {
 const GAMES = ['Dota 2', 'CS2', 'Otro'];
 const TIMES = ['Partido completo', 'Mapa 1', 'Mapa 2', 'Mapa 3', 'En vivo', 'Otro'];
 const STAKES = [10, 20, 50, 100];
+const STAKE_ADDS = [1, 5];
 const ODDS = [1.5, 1.8, 2, 2.5];
 const PERIODS = [
   ['all', 'Todo'],
@@ -528,7 +529,7 @@ function openBetDialog(bet = null) {
         <div class="field input-with-chips">
           <label for="b-stake">Monto</label>
           <input id="b-stake" name="stake" type="number" inputmode="decimal" step="0.01" min="0.01" placeholder="0.00" required value="${bet?.stake ?? ''}">
-          <div class="choices">${quick('stake', STAKES, (v) => `$${v}`)}</div>
+                    <div class="choices">${quick('stake', STAKES, (v) => `$${v}`)}${STAKE_ADDS.map((v) => `<button class="qadd" type="button" data-add="stake" data-value="${v}" aria-label="Sumar ${v} al monto">+${v}</button>`).join('')}</div>
         </div>
         <div class="field input-with-chips">
           <label for="b-odds">Cuota</label>
@@ -574,6 +575,13 @@ function openBetDialog(bet = null) {
   form.addEventListener('input', sync);
   form.querySelectorAll('.qfill').forEach((b) =>
     b.addEventListener('click', () => { form.elements[b.dataset.fill].value = b.dataset.value; sync(); })
+  );
+    form.querySelectorAll('.qadd').forEach((b) =>
+    b.addEventListener('click', () => {
+      const input = form.elements[b.dataset.add];
+      input.value = round2((Number(input.value) || 0) + Number(b.dataset.value));
+      sync();
+    })
   );
   sync();
 
