@@ -349,3 +349,12 @@ th button svg { width: 13px; height: 13px; }
 .field-row > * { min-width: 0; }
 .field input:not([type='radio']) { width: 100%; }
 .qfill { padding: 0 11px; }
+
+.qadd {
+  display: inline-flex; align-items: center; min-height: 36px; padding: 0 12px; border-radius: 10px;
+  border: 1px dashed var(--accent-ink); background: var(--bg); color: var(--accent-ink);
+  font-size: 13.5px; font-weight: 500; cursor: pointer;
+}
+.qadd:hover { background: var(--accent-soft); }
+.qadd:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 2px; }
+.field-row { align-items: start; }
